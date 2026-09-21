@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>《艺术学概论》引导式学习与形成性评价智能体</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                   "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      background: #f7f8fa;
+      color: #1f2329;
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 72px 28px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 42px;
+      box-shadow: 0 8px 30px rgba(31,35,41,.08);
+    }
+    h1 {
+      margin: 0 0 18px;
+      font-size: 32px;
+      line-height: 1.35;
+    }
+    .subtitle {
+      font-size: 18px;
+      color: #646a73;
+      margin-bottom: 28px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 7px 12px;
+      margin: 0 8px 8px 0;
+      background: #f2f3f5;
+      border-radius: 999px;
+      font-size: 14px;
+    }
+    .guide {
+      margin-top: 28px;
+      padding: 22px;
+      background: #f7f8fa;
+      border-radius: 12px;
+      line-height: 1.8;
+    }
+    .tip {
+      margin-top: 18px;
+      color: #646a73;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h1>人工智能赋能《艺术学概论》引导式学习与形成性评价智能体</h1>
+      <div class="subtitle">面向高校《艺术学概论》课程的引导式学习智能体</div>
+
+      <span class="tag">案例引导</span>
+      <span class="tag">分步追问</span>
+      <span class="tag">五维评价</span>
+      <span class="tag">精准修改</span>
+      <span class="tag">迁移训练</span>
+      <span class="tag">学情记录</span>
+
+      <div class="guide">
+        <strong>使用说明</strong><br>
+        1. 打开右下角智能体对话窗口。<br>
+        2. 按提示输入学生标识与班级信息。<br>
+        3. 选择一个课程知识点开始学习。<br>
+        4. 根据智能体提示完成案例分析、评价修改与迁移训练。
+      </div>
+
+      <div class="tip">提示：本智能体用于教育教学展示与学习训练。</div>
+    </section>
+  </main>
+
+  <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
+  <script>
+    new CozeWebSDK.WebChatClient({
+      config: {
+        bot_id: '7672967785772843046'
+      },
+      componentProps: {
+        title: '《艺术学概论》智能学习助手'
+      }
+    });
+  </script>
+</body>
+</html>
