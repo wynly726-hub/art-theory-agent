@@ -13,46 +13,31 @@
       background: #f7f8fa;
       color: #1f2329;
     }
-    .wrap {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 72px 28px;
-    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 72px 28px; }
     .card {
-      background: #fff;
-      border-radius: 18px;
-      padding: 42px;
+      background: #fff; border-radius: 18px; padding: 42px;
       box-shadow: 0 8px 30px rgba(31,35,41,.08);
     }
-    h1 {
-      margin: 0 0 18px;
-      font-size: 32px;
-      line-height: 1.35;
-    }
-    .subtitle {
-      font-size: 18px;
-      color: #646a73;
-      margin-bottom: 28px;
-    }
+    h1 { margin: 0 0 18px; font-size: 32px; line-height: 1.35; }
+    .subtitle { font-size: 18px; color: #646a73; margin-bottom: 28px; }
     .tag {
-      display: inline-block;
-      padding: 7px 12px;
-      margin: 0 8px 8px 0;
-      background: #f2f3f5;
-      border-radius: 999px;
-      font-size: 14px;
+      display: inline-block; padding: 7px 12px; margin: 0 8px 8px 0;
+      background: #f2f3f5; border-radius: 999px; font-size: 14px;
     }
     .guide {
-      margin-top: 28px;
-      padding: 22px;
-      background: #f7f8fa;
-      border-radius: 12px;
-      line-height: 1.8;
+      margin-top: 28px; padding: 22px; background: #f7f8fa;
+      border-radius: 12px; line-height: 1.8;
     }
-    .tip {
-      margin-top: 18px;
-      color: #646a73;
-      font-size: 14px;
+    .status {
+      margin-top: 18px; padding: 12px 14px; border-radius: 10px;
+      background: #f2f3f5; color: #646a73; font-size: 14px;
+    }
+    .status.ok { background: #eef8f0; color: #237804; }
+    .status.err { background: #fff1f0; color: #a8071a; }
+    .start-btn {
+      display: inline-block; margin-top: 18px; padding: 11px 18px;
+      border: 0; border-radius: 10px; cursor: pointer;
+      font-size: 16px; background: #2f54eb; color: white;
     }
   </style>
 </head>
@@ -71,24 +56,65 @@
 
       <div class="guide">
         <strong>使用说明</strong><br>
-        1. 打开右下角智能体对话窗口。<br>
+        1. 点击右下角智能体图标，或点击下方“开始使用智能体”。<br>
         2. 按提示输入学生标识与班级信息。<br>
         3. 选择一个课程知识点开始学习。<br>
         4. 根据智能体提示完成案例分析、评价修改与迁移训练。
       </div>
 
-      <div class="tip">提示：本智能体用于教育教学展示与学习训练。</div>
+      <button id="startBtn" class="start-btn" type="button">开始使用智能体</button>
+      <div id="sdkStatus" class="status">正在加载智能体……</div>
     </section>
   </main>
 
-  <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
+  <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.20/libs/cn/index.js"></script>
   <script>
-    new CozeWebSDK.WebChatClient({
-      config: {
-        bot_id: '7672967785772843046'
-      },
-      componentProps: {
-        title: '《艺术学概论》智能学习助手'
+    const statusEl = document.getElementById('sdkStatus');
+    let cozeClient = null;
+
+    try {
+      if (!window.CozeWebSDK || !window.CozeWebSDK.WebChatClient) {
+        throw new Error('Chat SDK 未成功加载');
+      }
+
+      cozeClient = new CozeWebSDK.WebChatClient({
+        config: {
+          type: 'bot',
+          bot_id: '7672967785772843046',
+          isIframe: false
+        },
+        auth: {
+          type: 'unauth'
+        },
+        ui: {
+          base: {
+            layout: 'pc',
+            lang: 'zh-CN',
+            zIndex: 9999
+          },
+          asstBtn: {
+            isNeed: true
+          },
+          chatBot: {
+            title: '《艺术学概论》智能学习助手',
+            isNeedAddNewConversation: true
+          }
+        }
+      });
+
+      statusEl.textContent = '智能体已加载。请点击右下角图标或“开始使用智能体”。';
+      statusEl.className = 'status ok';
+    } catch (err) {
+      statusEl.textContent = '智能体初始化失败：' + (err && err.message ? err.message : String(err));
+      statusEl.className = 'status err';
+    }
+
+    document.getElementById('startBtn').addEventListener('click', function () {
+      if (cozeClient && typeof cozeClient.showChatBot === 'function') {
+        cozeClient.showChatBot();
+      } else {
+        statusEl.textContent = '聊天组件尚未初始化，请刷新页面后重试。';
+        statusEl.className = 'status err';
       }
     });
   </script>
